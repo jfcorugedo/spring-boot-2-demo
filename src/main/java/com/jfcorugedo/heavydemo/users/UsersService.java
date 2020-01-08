@@ -17,4 +17,8 @@ public class UsersService {
 
         return this.usersRepository.findAll();
     }
+
+    public void removeOne(String userId) {
+        this.usersRepository.delete(new User().setId(userId));
+    }
 }

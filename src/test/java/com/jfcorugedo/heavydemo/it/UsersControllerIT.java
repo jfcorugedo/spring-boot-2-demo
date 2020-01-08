@@ -3,6 +3,7 @@ package com.jfcorugedo.heavydemo.it;
 import com.jfcorugedo.heavydemo.users.dto.Role;
 import com.jfcorugedo.heavydemo.users.dto.User;
 import io.restassured.http.ContentType;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,16 @@ public class UsersControllerIT {
             .body("size()", is(3));
     }
 
+    @Test
+    public void removeUser() {
 
+        given()
+            .delete(String.format("http://localhost:%d/users/1", port))
+            .then()
+            .statusCode(HttpStatus.OK.value());
+
+        List<User> users = mongoTemplate.findAll(User.class);
+
+        assertThat(users).hasSize(2);
+    }
 }

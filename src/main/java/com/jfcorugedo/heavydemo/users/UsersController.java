@@ -3,7 +3,10 @@ package com.jfcorugedo.heavydemo.users;
 import com.jfcorugedo.heavydemo.users.dto.User;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,5 +25,14 @@ public class UsersController {
     public List<User> getAll() {
         log.debug("Processing request to get all users");
         return this.usersService.getAll();
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity deleteOne(@PathVariable("id") String userId) {
+
+        log.debug("Deleting user {1}", userId);
+        this.usersService.removeOne(userId);
+
+        return ResponseEntity.ok().build();
     }
 }
