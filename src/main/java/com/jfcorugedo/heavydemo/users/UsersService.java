@@ -21,4 +21,8 @@ public class UsersService {
     public void removeOne(String userId) {
         this.usersRepository.delete(new User().setId(userId));
     }
+
+    public User create(User user) {
+        return this.usersRepository.save(user);
+    }
 }

@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class UsersControllerIT {
@@ -50,11 +51,34 @@ public class UsersControllerIT {
 
         given()
             .delete(String.format("http://localhost:%d/users/1", port))
-            .then()
+        .then()
             .statusCode(HttpStatus.OK.value());
 
         List<User> users = mongoTemplate.findAll(User.class);
 
         assertThat(users).hasSize(2);
+    }
+
+    @Test
+    public void createUser() {
+
+        given()
+            .contentType(ContentType.JSON)
+            .body("{\"name\":\"Victor\", \"surname\":\"Espejo\", \"role\":\"CUSTOMER\"}")
+            .post(String.format("http://localhost:%d/users/", port))
+        .then()
+            .statusCode(HttpStatus.CREATED.value())
+            .contentType(ContentType.JSON)
+            .body("id", notNullValue())
+            .and()
+            .body("name", is("Victor"))
+            .and()
+            .body("surname", is("Espejo"))
+            .and()
+            .body("role", is("CUSTOMER"));
+
+        List<User> users = mongoTemplate.findAll(User.class);
+
+        assertThat(users).hasSize(4);
     }
 }
