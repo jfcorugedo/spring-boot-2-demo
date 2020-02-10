@@ -58,4 +58,21 @@ public class ProductsControllerIT {
             .contentType(ContentType.JSON)
             .body("size()", is(3));
     }
+
+    @Test
+    public void getOneProduct() {
+
+        given()
+            .get(String.format("http://localhost:%d/products/3", port))
+            .then()
+            .statusCode(HttpStatus.OK.value())
+            .contentType(ContentType.JSON)
+            .body("id", is("3"))
+            .and()
+            .body("name", is("iWatch"))
+            .and()
+            .body("description", is("The best watch in the world"))
+            .and()
+            .body("price", is( 329.99f));
+    }
 }
