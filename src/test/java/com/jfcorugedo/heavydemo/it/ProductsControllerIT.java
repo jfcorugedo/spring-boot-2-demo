@@ -32,14 +32,15 @@ public class ProductsControllerIT {
     @BeforeEach
     public void setUp() {
         mongoTemplate.dropCollection("product");
-        saveProduct("iPhone", "The best mobile in the world", new BigDecimal(800));
-        saveProduct("Macbook", "The best laptop in the world", new BigDecimal(1999.99));
-        saveProduct("iWatch", "The best watch in the world", new BigDecimal(329.99));
+        saveProduct("1", "iPhone", "The best mobile in the world", new BigDecimal(800));
+        saveProduct("2","Macbook", "The best laptop in the world", new BigDecimal(1999.99));
+        saveProduct("3","iWatch", "The best watch in the world", new BigDecimal(329.99));
     }
 
-    private void saveProduct(String name, String description, BigDecimal price) {
+    private void saveProduct(String id, String name, String description, BigDecimal price) {
         mongoTemplate.save(
             new Product()
+                .setId(id)
                 .setName(name)
                 .setDescription(description)
                 .setPrice(price),
