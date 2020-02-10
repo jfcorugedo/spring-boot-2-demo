@@ -32,9 +32,9 @@ public class ProductsControllerIT {
     @BeforeEach
     public void setUp() {
         mongoTemplate.dropCollection("product");
-        saveProduct("1", "iPhone", "The best mobile in the world", new BigDecimal(800));
-        saveProduct("2","Macbook", "The best laptop in the world", new BigDecimal(1999.99));
-        saveProduct("3","iWatch", "The best watch in the world", new BigDecimal(329.99));
+        saveProduct("1", "iPhone", "The best mobile in the world", new BigDecimal("800"));
+        saveProduct("2","Macbook", "The best laptop in the world", new BigDecimal("1999.99"));
+        saveProduct("3","iWatch", "The best watch in the world", new BigDecimal("329.99"));
     }
 
     private void saveProduct(String id, String name, String description, BigDecimal price) {
@@ -73,6 +73,23 @@ public class ProductsControllerIT {
             .and()
             .body("description", is("The best watch in the world"))
             .and()
-            .body("price", is( 329.99f));
+            .body("price", is( 32.999f));
+    }
+
+    @Test
+    public void ensureProperDiscountIsApplied() {
+
+        given()
+            .get(String.format("http://localhost:%d/products", port))
+            .then()
+            .statusCode(HttpStatus.OK.value())
+            .contentType(ContentType.JSON)
+            .body("size()", is(3))
+            .and()
+            .body("[0].price", is(400.0f))
+            .and()
+            .body("[1].price", is( 1999.99f))
+            .and()
+            .body("[2].price", is( 32.999f));
     }
 }
