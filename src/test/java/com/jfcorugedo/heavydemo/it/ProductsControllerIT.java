@@ -49,7 +49,7 @@ public class ProductsControllerIT {
     }
 
     @Test
-    public void getAllUsersReturnsAllOfThem() {
+    public void getAllProducts() {
 
         given()
             .get(String.format("http://localhost:%d/products", port))
@@ -73,7 +73,7 @@ public class ProductsControllerIT {
             .and()
             .body("description", is("The best watch in the world"))
             .and()
-            .body("price", is( 32.999f));
+            .body("price", is( 39.92879f));
     }
 
     @Test
@@ -86,10 +86,10 @@ public class ProductsControllerIT {
             .contentType(ContentType.JSON)
             .body("size()", is(3))
             .and()
-            .body("[0].price", is(400.0f))
+            .body("[0].price", is(484.0f))
             .and()
-            .body("[1].price", is( 1999.99f))
+            .body("[1].price", is( 2419.9878f))
             .and()
-            .body("[2].price", is( 32.999f));
+            .body("[2].price", is( 39.92879f));
     }
 }
