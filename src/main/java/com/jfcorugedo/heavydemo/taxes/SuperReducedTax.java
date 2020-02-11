@@ -2,8 +2,10 @@ package com.jfcorugedo.heavydemo.taxes;
 
 import com.jfcorugedo.heavydemo.products.dto.Product;
 import java.math.BigDecimal;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+@Order(10)
 @Component
 public class SuperReducedTax implements Tax {
 

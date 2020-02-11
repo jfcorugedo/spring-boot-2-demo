@@ -23,6 +23,11 @@ public class LoggingAspect {
         printInfo(joinPoint);
     }
 
+    @Before("execution(* com.jfcorugedo.heavydemo.taxes..*.*(..))")
+    public void logTaxesExecution(JoinPoint joinPoint) {
+        printInfo(joinPoint);
+    }
+
     private void printInfo(JoinPoint joinPoint) {
         System.out.println("\n**************************************\n"
                            + "* Entering: " + joinPoint.toString() +

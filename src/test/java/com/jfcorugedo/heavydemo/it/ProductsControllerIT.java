@@ -86,9 +86,9 @@ public class ProductsControllerIT {
             .contentType(ContentType.JSON)
             .body("size()", is(3))
             .and()
-            .body("[0].price", is(484.0f))
+            .body("[0].price", is(440.0f))
             .and()
-            .body("[1].price", is( 2419.9878f))
+            .body("[1].price", is( 2079.9895f))
             .and()
             .body("[2].price", is( 39.92879f));
     }
